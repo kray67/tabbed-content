@@ -1,8 +1,51 @@
+import { useState } from 'react'
+import { useTransition, animated } from '@react-spring/web'
+import data from './data'
+import EpisodesList from './components/EpisodesList';
+import EpisodeDisplay from './components/EpisodeDisplay';
 
 function App() {
+	const [episodesList, setEpisodesList] = useState(data)
+	const [episodeToShow, setEpisodeToShow] = useState(false)
+	const transition = useTransition(episodeToShow, {
+		from: { x: -100, opacity: 0 },
+		enter: { x: 0, opacity: 1, delay: 750 },
+		leave: { x: 100, opacity: 0 }
+	})
+
+	const onSelectEpisode = (selected) => {
+		setEpisodesList(
+			episodesList.map((episode) =>
+				episode.id === selected.id ? { ...episode, selected: true } : { ...episode, selected: false }
+			)
+		)
+		window.scrollTo(0, 0)
+		displayEpisode(selected.id)
+	}
+
+	const displayEpisode = (id) => {
+		setEpisodeToShow(
+			episodesList.find((episode) => episode.id === id )
+		)
+	}
+
 	return (
-		<div className="App w-full h-screen overflow-hidden bg-black">
-			Hello
+		<div className="App w-full h-full flex text-white font-sans">
+			<div className="w-2/5 h-full flex flex-col items-start gap-y-10 py-24 pl-48 pr-9 relative border-r-4 border-yellow-400 border-solid">
+				<img src="./images/logo.svg" alt="Compressed FM Logo" />
+				<EpisodesList episodesList={episodesList} onSelectEpisode={onSelectEpisode} />
+			</div>
+			<div className="w-3/5 h-full py-24 pl-20 pr-48">
+				{transition((style, episodeToShow) =>
+					episodeToShow
+						?
+						<animated.div style={style}>
+							<EpisodeDisplay episodeToShow={episodeToShow} />
+						</animated.div>
+						:
+						<animated.h1 style={style} className="flex items-center justify-center pt-60 text-3xl font-bold">Select an episode to preview.</animated.h1>
+				)}
+			</div>
 		</div>
 	);
 }
