@@ -31,7 +31,7 @@ function App() {
 
 	return (
 		<div className="App w-full h-full flex text-white font-sans">
-			<div className="w-2/5 h-full flex flex-col items-start gap-y-10 py-24 pl-48 pr-9 relative border-r-4 border-yellow-400 border-solid">
+			<div className="w-2/5 h-full min-h-screen flex flex-col items-start gap-y-10 py-24 pl-48 pr-9 relative border-r-4 border-yellow-400 border-solid">
 				<img src="./images/logo.svg" alt="Compressed FM Logo" />
 				<EpisodesList episodesList={episodesList} onSelectEpisode={onSelectEpisode} />
 			</div>
