@@ -8,9 +8,9 @@ function App() {
 	const [episodesList, setEpisodesList] = useState(data)
 	const [episodeToShow, setEpisodeToShow] = useState(false)
 	const transition = useTransition(episodeToShow, {
-		from: { /*x: -100,*/scale: 0.5, opacity: 0 },
-		enter: { /*x: 0,*/scale: 1, opacity: 1, delay: 750 },
-		leave: { /*x: 100,*/scale: 0.5, opacity: 0 }
+		from: { scale: 0.5, opacity: 0 },
+		enter: { scale: 1, opacity: 1, delay: 750 },
+		leave: { scale: 0.5, opacity: 0 }
 	})
 
 	const onSelectEpisode = (selected) => {
@@ -40,8 +40,9 @@ function App() {
 				<div className="w-2/5 h-full min-h-screen flex flex-col items-start gap-y-10 py-24 pl-48 pr-9 relative border-r-4 border-yellow-300 border-solid">
 					<img src="./images/logo.svg" alt="Compressed FM Logo" />
 					<EpisodesList episodesList={episodesList} onSelectEpisode={onSelectEpisode} />
+					<p className="text-sm font-mono">Tabbed Content App made with <br /> Create React App and TailwindCSS</p>
 				</div>
-				<div className="w-3/5 h-full py-24 pl-20 pr-48">
+				<div className="w-3/5 h-full fixed right-0 py-24 pl-20 pr-48">
 					{transition((style, episodeToShow) =>
 						episodeToShow
 							?
@@ -53,24 +54,6 @@ function App() {
 					)}
 				</div>
 			</div>
-
-
-
-			{/* <div className="w-2/5 h-full min-h-screen flex flex-col items-start gap-y-10 py-24 pl-48 pr-9 relative border-r-4 border-yellow-300 border-solid">
-				<img src="./images/logo.svg" alt="Compressed FM Logo" />
-				<EpisodesList episodesList={episodesList} onSelectEpisode={onSelectEpisode} />
-			</div>
-			<div className="w-3/5 h-full py-24 pl-20 pr-48">
-				{transition((style, episodeToShow) =>
-					episodeToShow
-						?
-						<animated.div style={style}>
-							<EpisodeDisplay episodeToShow={episodeToShow} />
-						</animated.div>
-						:
-						<animated.h1 style={style} className="flex items-center justify-center pt-60 text-3xl font-bold">Select an episode to preview.</animated.h1>
-				)}
-			</div> */}
 		</div>
 	);
 }
